@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html>
+<link rel="stylesheet" href = "http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+<script data-require="angular.js@1.4.x" src="https://code.angularjs.org/1.4.3/angular.js" data-semver="1.4.3"></script>
+	<body ng-app="customApp" style="padding:20px">
+    <h1>Examples AngularJS in a Document to Reference</h1>
+
+    <h2>{{ " Examples of Angular " + (1 * 1.4) }}</h2>
+
+    <div ng-app="" ng-init="listLabel={title:'Few Examples in a document With: ',angularver:'Angular 1.4.3'}">
+        <p><span ng-bind="listLabel.title + listLabel.angularver"></span></p>
+    </div>
+
+    <div ng-app="" ng-init="unidades=5;preco=1.5">
+        <input type="number" placeholder="Qtde" ng-model="unidades">
+        <input type="number" step="0.01" placeholder="Preço" ng-model="preco"> Total: {{ (unidades * preco) | currency }}
+    </div>
+
+    <p ng-show="hour > 12">I am visible in hour > 12.</p>
+    <p ng-show="true">I am visible.</p>
+    <p ng-show="false">I am not visible.</p>
+    <p>
+        <button ng-disabled="EnableBtTrueFalse">Click Me!</button>
+        <input type="checkbox" ng-model="EnableBtTrueFalse">Enable Button? {{ !EnableBtTrueFalse }}
+    </p>
+    <p>
+        <button ng-click="count = count + 1">Count Clicks</button>{{ count }}</p>
+
+Array in a Table
+    <table ng-init="dados=['cell1','cell2','cell3']">
+        <tr ng-repeat="x in dados">
+            <td>{{ $index + 1 }}</td>
+            <td>{{ x }}</td>
+        </tr>
+    </table>
+List Data of a JSON load XHR
+    <div style="padding:20px;background-color:#FFDDAA" ng-controller="customController">
+        <p><input type="text" placeholder="Filter List..." ng-model="test"></p>
+        <div class="list" ng-repeat="user in users | filter:test || orderBy:'Email'">
+            {{ (user.Name | uppercase) + ', ' + user.Email }}
+        </div>
+    </div>
+Input ng-model and target ng-bind
+    <div style="padding:20px;background-color:#EEDDEE;padding:5px">
+        <input type="text" placeholder="Input Any Value..." ng-model="username"> <span ng-bind="username"></span>
+    </div>
+Receive output data from controller
+    <div style="padding:20px;background-color:#EEFFEE;padding:5px" ng-controller="Hello">
+        <p>Controller OUTPUT : {{name}}!</p>
+    </div>
+Receive message of controller
+    <p style="padding:20px;background-color:#ffd" ng-controller="HELLOController as mainH">Hello {{mainH.name}} and more!</p>
+
+Controller Display/Hide(toggle - ng-hide) and send message in console
+    <div style="padding:20px;background-color:#888;opacity:.7" ng-controller="Data">
+        <button ng-click="displayCoNSOLE()">Display Console resut</button>
+        <p ng-hide="hideDIV">
+            {{console}}
+        </p>
+    </div>
+
+    <div class="jumbotron" ng-controller="formExample">
+        Copy Example
+        <form novalidate>
+            Name:
+            <input type="text" ng-model="user.firstName">
+            <br> Email:
+            <input type="text" ng-model="user.email">
+            <br>
+            <br>
+            <button ng-click="reseted()">RESET</button>
+        </form>
+        <p>Form Values = {{user}}</p>
+        <p>Main Scope = {{mainValue}}</p>
+    </div>
+
+    <form style="padding:20px;background-color:#EDF" ng-controller="formValidateController" name="myForm" novalidate>
+        Form Validation
+        <div>
+            <input type="text" name="user" placeholder="Username..." ng-model="user" required>
+            <span style="color:red" ng-show="myForm.user.$dirty && myForm.user.$invalid">
+		  <span ng-show="myForm.user.$error.required">This field: Username is required.</span>
+            </span>
+            <br>
+            <input type="email" name="email" placeholder="Email..." ng-model="email" required>
+            <span style="color:red" ng-show="myForm.email.$dirty && myForm.email.$invalid">
+		  <span ng-show="myForm.email.$error.required">Email is required.</span>
+            <span ng-show="myForm.email.$error.email">Invalid email address.</span>
+            </span>
+            <br>{{number}}
+            <input type="submit" ng-disabled="myForm.user.$dirty && myForm.user.$invalid || myForm.email.$dirty && myForm.email.$invalid">
+        </div>
+    </form>
+
+    <div ng-controller="FormControllerEXAMPLE">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Edit</th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="user in users">
+                    <td>
+                        <button class="btn" ng-click="editUser(user.id)">
+                            <span class="glyphicon glyphicon-pencil"></span>&nbsp;&nbsp;Edit
+                        </button>
+                    </td>
+                    <td>{{ user.fName }}</td>
+                    <td>{{ user.lName }}</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <hr>
+        <button class="btn btn-success" ng-click="editUser('new')">
+            <span class="glyphicon glyphicon-user"></span> Create New User
+        </button>
+        <hr>
+
+        <h3 ng-show="edit">Create New User:</h3>
+        <h3 ng-hide="edit">Edit User:</h3>
+
+        <form class="form-horizontal">
+            <div class="form-group">
+                <label class="col-sm-2 control-label">First Name:</label>
+                <div class="col-sm-10">
+                    <input type="text" ng-model="fName" ng-disabled="!edit" placeholder="First Name">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">Last Name:</label>
+                <div class="col-sm-10">
+                    <input type="text" ng-model="lName" ng-disabled="!edit" placeholder="Last Name">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">Password:</label>
+                <div class="col-sm-10">
+                    <input type="password" ng-model="passw1" placeholder="Password">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">Repeat:</label>
+                <div class="col-sm-10">
+                    <input type="password" ng-model="passw2" placeholder="Repeat Password">
+                </div>
+            </div>
+        </form>
+
+        <hr>
+        <button class="btn btn-success" ng-disabled="error || incomplete">
+            <span class="glyphicon glyphicon-save"></span> Save Changes
+        </button>
+    </div>
+    </div>
+</body>
+<script>
+var app = angular.module('customApp', []);
+app.controller('customController', function($scope, $http) {
+    $http.get("./data.json").success(function(data) {
+        $scope.users = data.result;
+    });
+});
+app.controller('Hello', function($scope) {
+    $scope.name = 'CONTROLLER HELLO';
+});
+app.controller('Data', function($scope) {
+    $scope.console = "This is a result on console",
+        $scope.hideDIV = true;
+    $scope.displayCoNSOLE = function() {
+        $scope.hideDIV = !$scope.hideDIV;
+        console.log($scope.console);
+    }
+});
+app.controller('HELLOController', function() {
+    this.name = ['Julie',"May", "Mary"].join(", ");
+});
+
+app.controller('formExample', function($scope) {
+    $scope.mainValue = {
+        firstName: "Any Any",
+        email: "email@email.br"
+    };
+    $scope.reseted = function() {
+        $scope.user = angular.copy($scope.mainValue);
+    };
+    $scope.reseted();
+});
+app.controller('formValidateController', function($scope) {
+    $scope.user = angular.lowercase('My Name');
+    $scope.email = angular.uppercase('test@test');
+    $scope.number = 100;
+    $scope.number = angular.isString($scope.number) ? "isString" : angular.isNumber(100);
+});
+app.controller('FormControllerEXAMPLE', function($scope) {
+    $scope.fName = '';
+    $scope.lName = '';
+    $scope.passw1 = '';
+    $scope.passw2 = '';
+    $scope.users = [{
+        id: 1,
+        fName: 'Hege',
+        lName: "Pege"
+    }, {
+        id: 2,
+        fName: 'Kim',
+        lName: "Pim"
+    }, {
+        id: 3,
+        fName: 'Sal',
+        lName: "Smith"
+    }, {
+        id: 4,
+        fName: 'Jack',
+        lName: "Jones"
+    }, {
+        id: 5,
+        fName: 'John',
+        lName: "Doe"
+    }, {
+        id: 6,
+        fName: 'Peter',
+        lName: "Pan"
+    }];
+    $scope.edit = true;
+    $scope.error = false;
+    $scope.incomplete = false;
+    $scope.editUser = function(id) {
+        if (id == 'new') {
+            $scope.edit = true;
+            $scope.incomplete = true;
+            $scope.fName = '';
+            $scope.lName = '';
+        } else {
+            $scope.edit = false;
+            $scope.fName = $scope.users[id - 1].fName;
+            $scope.lName = $scope.users[id - 1].lName;
+        }
+    };
+
+    $scope.$watch('passw1', function() {
+        $scope.test();
+    });
+    $scope.$watch('passw2', function() {
+        $scope.test();
+    });
+    $scope.$watch('fName', function() {
+        $scope.test();
+    });
+    $scope.$watch('lName', function() {
+        $scope.test();
+    });
+
+    $scope.test = function() {
+        if ($scope.passw1 !== $scope.passw2) {
+            $scope.error = true;
+        } else {
+            $scope.error = false;
+        }
+        $scope.incomplete = false;
+        if ($scope.edit && (!$scope.fName.length ||
+                !$scope.lName.length ||
+                !$scope.passw1.length || !$scope.passw2.length)) {
+            $scope.incomplete = true;
+        }
+    };
+})
+</script>
+</html>
+
